@@ -9,7 +9,7 @@ pipeline {
            echo 'maven version'
            sh 'mvn --version'
 
-           sh './mvnw clean package'
+           sh './mvnw clean verify'
        }
      }
 
@@ -19,4 +19,12 @@ pipeline {
             }
           }
   }
+  post {
+          always {
+              junit 'target/surefire-reports/*.xml'
+          }
+          success {
+              archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+          }
+      }
 }
