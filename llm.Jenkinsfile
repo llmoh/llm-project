@@ -8,16 +8,16 @@ pipeline {
        steps {
            echo 'maven version'
            sh 'mvn --version'
-
+           // Compile and run unit tests
            sh './mvnw clean verify'
        }
      }
 
-     stage('stage 2'){
-            steps {
-              echo 'stage 2'
-            }
-          }
+     stage('Package') {
+         steps {
+             sh 'mvn package -DskipTests' // optional, if you want to skip tests here
+         }
+     }
   }
   post {
           always {
